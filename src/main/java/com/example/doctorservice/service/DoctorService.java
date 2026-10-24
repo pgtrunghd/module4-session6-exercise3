@@ -5,6 +5,7 @@ import com.example.doctorservice.repository.DoctorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DoctorService {
@@ -13,6 +14,11 @@ public class DoctorService {
 
     public DoctorService(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
+    }
+
+    public Optional<DoctorResponse> findById(Long id) {
+        return doctorRepository.findById(id)
+                .map(d -> new DoctorResponse(d.getId(), d.getName(), d.getSpecialization()));
     }
 
     public List<DoctorResponse> findAll() {
